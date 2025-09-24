@@ -27,7 +27,11 @@ Ubuntu
 - Create Procfile in your project root directory and this is used by deployment server to deploy flask application.
 - modify procfile with web: gunicorn app: app 
 - create github account and create a repo for your project
-- zip your project folder and upload it to github and commit from main branch
+- initialise git using  git init
+- add your files using git add .
+- commit your files using git commit -m "Initial commit of the project"
+- Connect Your Local Repository to GitHub using git remote add origin https://github.com/your-username/your-repo-name.git'
+- Push Your Code to GitHub using git push -u origin main
 
 2) Deploying your application
 - create render account and connect your github repo created under render dashboard
