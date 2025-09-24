@@ -1,0 +1,26 @@
+body{
+    padding-top: 100px;
+    font-family: sans-serif;
+    background-color: skyblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#imageInput, #predictButton{
+    margin-bottom: 10px;
+}
+
+#image-preview-container{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#imagePreview{
+    max-width: 30%;
+    height: auto;
+    display: block;
+}

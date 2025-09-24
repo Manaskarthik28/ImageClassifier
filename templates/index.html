@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="predictButton" disabled>Predict</button>
+    
+    <div id="image-preview-container">
+        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+    </div>
+    
+    <div id="results">
+        <h2>Predictions</h2>
+        <ul id="prediction-list"></ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
