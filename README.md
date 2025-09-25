@@ -6,4 +6,6 @@ The core idea behind ResNet is the use of residual blocks. In a traditional neur
 Mathematically, if the input to a residual block is ( x ) and the desired underlying mapping is ( H(x) ), the residual block aims to learn the residual function ( F(x) = H(x) - x ). Thus, the output of the block is ( H(x) = F(x) + x ). This formulation helps in mitigating the vanishing gradient problem and stabilizes the training of very deep networks.
 
 
+Deployment images can be found in Screenshots folder
+Deployment Link: https://imageclassifier-jaze.onrender.com/
 
