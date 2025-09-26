@@ -1,60 +1,59 @@
 const imageInput = document.getElementById('imageInput');
 const predictButton = document.getElementById('predictButton');
 const imagePreview = document.getElementById('imagePreview');
-const predictionList = document.getElementById('prediction-list');
+const predictionList = document.getElementById('predictions-list');
 
-imageInput.addEventListener('change', (event) => {
+// helper function to reset UI
+const resetUI = () =>{
+    imagePreview.src = '#';
+    imagePreview.style.display = 'none';
+    predictButton.disabled = true;
+    predictionList.innerHTML = '';
+}
+// 1 handle image input
+imageInput.addEventListener('change',(event)=>{
     const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = 'block';
-            predictButton.disabled = false;
-            predictionList.innerHTML = ''; // Clear previous results
-        };
-        reader.readAsDataURL(file);
-    } else {
-        imagePreview.src = '#';
-        imagePreview.style.display = 'none';
-        predictButton.disabled = true;
-        predictionList.innerHTML = '';
-    }
-});
-
-predictButton.addEventListener('click', () => {
-    const file = imageInput.files[0];
-    if (!file) {
-        alert('Please select an image first.');
+    if(!file){
+        resetUI();
         return;
     }
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+        imagePreview.src = reader.target.result;
+        imagePreview.style.display = 'block';
+        predictButton.disabled = false;
+        predictionList.innerHTML = ''; //clear previous results
+    }
+    reader.readAsDataURL(file);
+})
 
+// 2 handle predictions
+predictButton.addEventListener('click',()=>{
+    const file = imageInput.files[0];
+    if(!file){
+        return alert("Please select an image first")
+    }
     const formData = new FormData();
-    formData.append('file', file);
-    
-    // Clear previous results and show a loading message
-    predictionList.innerHTML = '<li>Predicting...</li>';
-
-    fetch('/predict', {
-        method: 'POST',
-        body: formData,
-    })
+    formData.append('file',file)
+    predictionList.innerHTML = '<li>Predicting..</li>'
+    fetch('/predict',{method:'POST',body:formData})
     .then(response => response.json())
-    .then(data => {
-        predictionList.innerHTML = ''; // Clear loading message
-        if (data.error) {
-            alert('Error: ' + data.error);
-            return;
+    .then(data=>{
+        predictionList.innerHTML = ""
+        if(!Array.isArray(data) || data.error){
+            throw new Error('Bad data')
         }
-        data.forEach(result => {
-            const li = document.createElement('li');
-            li.textContent = `${result.label}: ${Math.round(result.score * 100)}%`;
-            predictionList.appendChild(li);
-        });
+        data.forEach(({label,score})=>{
+            const li = document.createElement('li')
+            li.textContent = `${label}: ${Math.round(score * 100)}%`
+            predictionList.appendChild(li)
+
+        })
+
     })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred during prediction.');
-        predictionList.innerHTML = '';
-    });
-});
+    .catch(error=>{
+        console.error('Prediction error:',error)
+        alert("Error in prediction. please try again later")
+        predictionList.innerHTML = ''
+    })
+})
