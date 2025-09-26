@@ -30,9 +30,6 @@ imageInput.addEventListener('change',(event)=>{
 // 2 handle predictions
 predictButton.addEventListener('click',()=>{
     const file = imageInput.files[0];
-    if(!file){
-        return alert("Please select an image first")
-    }
     const formData = new FormData();
     formData.append('file',file)
     predictionList.innerHTML = '<li>Predicting..</li>'
@@ -57,3 +54,4 @@ predictButton.addEventListener('click',()=>{
         predictionList.innerHTML = ''
     })
 })
+
