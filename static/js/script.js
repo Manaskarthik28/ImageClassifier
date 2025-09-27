@@ -6,6 +6,11 @@ const predictionList = document.getElementById('predictions-list')
 // function to handle image upload
 imageInput.addEventListener('change',(event)=>{
     const file = event.target.files[0]
+    const fileType = file.type
+    if(fileType != 'image/jpg' && fileType != 'image/jpeg'){
+        alert('Please upload JPG/JPEG supported formats')
+        return
+    }
     const reader = new FileReader()
     reader.onload = (e) =>{
         imagePreview.src = e.target.result
